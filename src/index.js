@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import SocketWrapper from "./SocketWrapper";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SocketWrapper />
   </React.StrictMode>,
   document.getElementById("root")
 );

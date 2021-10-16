@@ -1,9 +1,10 @@
 import "./App.css";
 import TopSection from "./components/TopSection";
 import ReviewList from "./components/ReviewList";
+
 import { useEffect, useState } from "react";
 
-function App() {
+function App({ socket }) {
   const [aveRating, setAveRating] = useState(0);
   const [reviews, setReviews] = useState(0);
 
@@ -19,8 +20,9 @@ function App() {
   };
 
   useEffect(() => {
+    socket.on("getReviews", (res) => console.log(res));
     fetchReviews();
-  }, []);
+  }, [socket]);
 
   return (
     <>
