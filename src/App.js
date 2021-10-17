@@ -2,27 +2,28 @@ import "./App.css";
 import TopSection from "./components/TopSection";
 import ReviewList from "./components/ReviewList";
 
+import io from "socket.io-client";
+
 import { useEffect, useState } from "react";
 
-function App({ socket }) {
+function App() {
   const [aveRating, setAveRating] = useState(0);
   const [reviews, setReviews] = useState(0);
+  const [socket, setSocket] = useState(undefined);
 
-  const fetchReviews = () => {
-    fetch("http://localhost:5500/reviews")
-      .then((response) => response.json())
-      .then((result) => {
-        const { averageRating, reviews } = result;
-        setAveRating(averageRating);
-        setReviews(reviews);
-      })
-      .catch((error) => console.log("error", error));
+  const handleGetReviews = ({ averageRating, reviews }) => {
+    setAveRating(averageRating);
+    setReviews(reviews);
   };
 
   useEffect(() => {
-    socket.on("getReviews", (res) => console.log(res));
-    fetchReviews();
-  }, [socket]);
+    const socketIo = io("http://localhost:5500", {
+      transports: ["websocket", "polling", "flashsocket"],
+    });
+    setSocket(socketIo);
+    socketIo.on("getReviews", handleGetReviews);
+    // fetchReviews();
+  }, []);
 
   return (
     <>
