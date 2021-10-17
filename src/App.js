@@ -15,8 +15,9 @@ function App() {
   };
 
   const handleNewReview = useCallback(
-    (newReview) => {
+    ({ newReview, averageRating }) => {
       setReviews([...reviews, newReview]);
+      setAveRating(averageRating);
     },
     [reviews, setReviews]
   );
