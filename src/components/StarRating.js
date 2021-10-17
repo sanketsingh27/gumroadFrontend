@@ -14,10 +14,20 @@ const StartRating = ({ isStatic, inputRating, getRatingValue }) => {
       <ul className="stcomp">
         {[...Array(5)].map((star, index) => {
           index += 1;
+          console.log("index", index);
           return (
             <>
               {isStatic ? (
-                <li key={index} className={index <= inputRating ? `star star-filled` : "star"}></li>
+                <li
+                  key={index}
+                  className={index <= inputRating ? `star star-filled` : "star"}
+                  style={{
+                    background:
+                      index - 1 < inputRating && inputRating < index
+                        ? "linear-gradient(90deg, #ffcd69 50%, #e0e0e0 50%)"
+                        : null,
+                  }}
+                ></li>
               ) : (
                 <li
                   key={index}

@@ -72,6 +72,10 @@
 .star-filled {
   background: linear-gradient(180deg, #ffcd69 50%, #fdce71 50%);
 }
+
+.half-star {
+  background: linear-gradient(90deg, #ffcd69 50%, #e0e0e0 50%);
+}
 .ratingText {
   font-size: 44px;
   font-weight: 400;
