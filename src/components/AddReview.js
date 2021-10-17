@@ -1,8 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import StatRating from "./StarRating";
+import { useSocket } from "../context/SocketContext";
+
 const AddReview = ({ reviews, setReviews, openModal }) => {
   const reviewRef = useRef(null);
   const [rating, setRating] = useState(null);
+  const socket = useSocket();
 
   useEffect(() => {
     // clean up
@@ -23,27 +26,22 @@ const AddReview = ({ reviews, setReviews, openModal }) => {
       rating: Number(rating),
     };
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
+    socket.emit("addNewReview", data);
+    alert("Added New Review");
+    openModal(false);
 
-    fetch("http://localhost:5500/reviews", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setReviews([...reviews, result]);
-        alert("Added New Review");
-        openModal(false);
-      })
-      .catch((error) => {
-        alert("Error occurred while adding new review.");
-        openModal(false);
-        console.log("error", error);
-      });
+    // fetch("http://localhost:5500/reviews", requestOptions)
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     setReviews([...reviews, result]);
+    //     alert("Added New Review");
+    //     openModal(false);
+    //   })
+    //   .catch((error) => {
+    //     alert("Error occurred while adding new review.");
+    //     openModal(false);
+    //     console.log("error", error);
+    //   });
   };
 
   return (

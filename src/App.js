@@ -2,11 +2,11 @@ import "./App.css";
 import TopSection from "./components/TopSection";
 import ReviewList from "./components/ReviewList";
 import { useSocket } from "./context/SocketContext";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function App() {
   const [aveRating, setAveRating] = useState(0);
-  const [reviews, setReviews] = useState(0);
+  const [reviews, setReviews] = useState([]);
   const socket = useSocket();
 
   const handleGetReviews = ({ averageRating, reviews }) => {
@@ -14,11 +14,19 @@ function App() {
     setReviews(reviews);
   };
 
+  const handleNewReview = useCallback(
+    (newReview) => {
+      setReviews([...reviews, newReview]);
+    },
+    [reviews, setReviews]
+  );
+
   useEffect(() => {
     if (socket == null) return;
 
     socket.on("getReviews", handleGetReviews);
-  }, [socket]);
+    socket.on("newReview", handleNewReview);
+  }, [socket, handleNewReview]);
 
   return (
     <>
