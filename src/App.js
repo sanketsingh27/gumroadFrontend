@@ -22,7 +22,6 @@ function App() {
     });
     setSocket(socketIo);
     socketIo.on("getReviews", handleGetReviews);
-    // fetchReviews();
   }, []);
 
   return (
