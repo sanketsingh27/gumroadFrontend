@@ -1,15 +1,13 @@
 import "./App.css";
 import TopSection from "./components/TopSection";
 import ReviewList from "./components/ReviewList";
-
-import io from "socket.io-client";
-
+import { useSocket } from "./context/SocketContext";
 import { useEffect, useState } from "react";
 
 function App() {
   const [aveRating, setAveRating] = useState(0);
   const [reviews, setReviews] = useState(0);
-  const [socket, setSocket] = useState(undefined);
+  const socket = useSocket();
 
   const handleGetReviews = ({ averageRating, reviews }) => {
     setAveRating(averageRating);
@@ -17,12 +15,10 @@ function App() {
   };
 
   useEffect(() => {
-    const socketIo = io("http://localhost:5500", {
-      transports: ["websocket", "polling", "flashsocket"],
-    });
-    setSocket(socketIo);
-    socketIo.on("getReviews", handleGetReviews);
-  }, []);
+    if (socket == null) return;
+
+    socket.on("getReviews", handleGetReviews);
+  }, [socket]);
 
   return (
     <>
