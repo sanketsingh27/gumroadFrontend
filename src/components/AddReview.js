@@ -29,19 +29,6 @@ const AddReview = ({ reviews, setReviews, openModal }) => {
     socket.emit("addNewReview", data);
     alert("Added New Review");
     openModal(false);
-
-    // fetch("http://localhost:5500/reviews", requestOptions)
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     setReviews([...reviews, result]);
-    //     alert("Added New Review");
-    //     openModal(false);
-    //   })
-    //   .catch((error) => {
-    //     alert("Error occurred while adding new review.");
-    //     openModal(false);
-    //     console.log("error", error);
-    //   });
   };
 
   return (

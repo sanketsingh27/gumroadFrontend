@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Star from "react-rating-stars-component";
 
 const StartRating = ({ isStatic, inputRating, getRatingValue }) => {
   const [rating, setRating] = useState(null);
