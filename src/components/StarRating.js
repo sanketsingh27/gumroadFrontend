@@ -1,24 +1,15 @@
-import { useState } from "react";
-import Star from "react-rating-stars-component";
+import StarComponent from "react-rating-stars-component";
 
 const StartRating = ({ isStatic, inputRating, getRatingValue }) => {
-  const [rating, setRating] = useState(null);
-  const [hover, setHover] = useState(null);
-
-  const handleRating = (rating) => {
-    setRating(rating);
-    getRatingValue(rating);
-  };
-
   return (
     <>
-      <ul className="stcomp">
-        {[...Array(5)].map((star, index) => {
-          index += 1;
-          console.log("index", index);
-          return (
-            <>
-              {isStatic ? (
+      {isStatic ? (
+        <ul className="stcomp">
+          {[...Array(5)].map((star, index) => {
+            index += 1;
+            console.log("index", index);
+            return (
+              <>
                 <li
                   key={index}
                   className={index <= inputRating ? `star star-filled` : "star"}
@@ -29,19 +20,19 @@ const StartRating = ({ isStatic, inputRating, getRatingValue }) => {
                         : null,
                   }}
                 ></li>
-              ) : (
-                <li
-                  key={index}
-                  className={index <= (hover || rating) ? `star star-filled` : "star"}
-                  onClick={() => handleRating(index)}
-                  onMouseEnter={() => setHover(index)}
-                  onMouseLeave={() => setHover(rating)}
-                ></li>
-              )}
-            </>
-          );
-        })}
-      </ul>
+              </>
+            );
+          })}
+        </ul>
+      ) : (
+        <StarComponent
+          size={30}
+          isHalf={true}
+          color="#E0E0E0"
+          activeColor="#FDCE71"
+          onChange={(rating) => getRatingValue(rating)}
+        />
+      )}
     </>
   );
 };
