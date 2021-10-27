@@ -10,7 +10,7 @@ export function SocketProvider({ children }) {
   const [socket, setSocket] = useState();
 
   useEffect(() => {
-    const newSocket = io("http://3.15.197.193:5500", {
+    const newSocket = io("wss://agile-crag-24804.herokuapp.com/", {
       transports: ["websocket", "polling", "flashsocket"],
     });
     console.log({ newSocket });
